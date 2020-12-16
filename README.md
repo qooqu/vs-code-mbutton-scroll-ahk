@@ -17,7 +17,7 @@ Windows users can use this [autohotkey](https://www.autohotkey.com/) script to r
                 send, {WheelDown 1}
             sleep 100
         }
-        return
+    return
 #IfWinActive
 
 #IfWinActive ahk_exe Code.exe
