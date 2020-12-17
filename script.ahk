@@ -2,7 +2,7 @@
     MButton::
         if (A_Cursor != "IBeam") {
             send {MButton}
-		} else {
+        } else {
             scroll := true
             MouseGetPos, , yinit
             while scroll {
