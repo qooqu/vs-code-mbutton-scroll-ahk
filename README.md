@@ -7,15 +7,19 @@ Windows users can use this [autohotkey](https://www.autohotkey.com/) script as a
 ```
 #IfWinActive ahk_exe Code.exe
     MButton::
-        scroll := true
-        MouseGetPos, , yinit
-        while scroll {
-            MouseGetPos, , y
-            if (y < yinit)
-                send, {WheelUp 1}
-            else
-                send, {WheelDown 1}
-            sleep 100
+        if (A_Cursor != "IBeam") {
+            send {MButton}
+        } else {
+            scroll := true
+            MouseGetPos, , yinit
+            while scroll {
+                MouseGetPos, , y
+                if (y < yinit)
+                    send, {WheelUp 1}
+                else
+                    send, {WheelDown 1}
+                sleep 100
+            }
         }
     return
 #IfWinActive
