@@ -1,7 +1,7 @@
 #IfWinActive ahk_exe Code.exe
     MButton::
         if (A_Cursor != "IBeam") {
-			send {MButton}
+            send {MButton}
 		} else {
             scroll := true
             MouseGetPos, , yinit
