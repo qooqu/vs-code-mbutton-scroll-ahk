@@ -4,12 +4,13 @@
             send {MButton}
         } else {
             scroll := true
+            noScrollZone := 15
             MouseGetPos, , yinit
             while scroll {
                 MouseGetPos, , y
-                if (y < yinit)
+                if (y < yinit - noScrollZone)
                     send, {WheelUp 1}
-                else
+                if (y > yinit + noScrollZone)
                     send, {WheelDown 1}
                 sleep 100
             }
