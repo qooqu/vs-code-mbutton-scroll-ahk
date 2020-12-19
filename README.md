@@ -4,6 +4,8 @@ Middle mouse button doesn't scroll in VS Code, as discussed [here](https://githu
 
 Windows users can use this [autohotkey](https://www.autohotkey.com/) script as a workaround.
 
+Note that the script only modifies the middle click if the cursor is inside the text area. If the cursor is outside of the text area (`if (A_Cursor != "IBeam")`), middle click is unaffected.
+
 ```
 #IfWinActive ahk_exe Code.exe
     MButton::
