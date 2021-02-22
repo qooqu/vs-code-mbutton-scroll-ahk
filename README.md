@@ -1,9 +1,7 @@
 # vs-code-mbutton-scroll-ahk
 
-Middle mouse button doesn't scroll in VS Code, as discussed [here](https://github.com/Microsoft/vscode/issues/6302).
+Middle mouse button doesn't scroll in VS Code, as discussed [here](https://github.com/Microsoft/vscode/issues/6302). Windows users can use this [autohotkey](https://www.autohotkey.com/) script as a workaround.
 
-Windows users can use this [autohotkey](https://www.autohotkey.com/) script as a workaround.
+The script can be found [here](https://github.com/qooqu/vs-code-mbutton-scroll-ahk/blob/main/script.ahk).
 
-Please see https://github.com/qooqu/vs-code-mbutton-scroll-ahk/blob/main/script.ahk for the code.
-
-Note that the script only modifies the middle click if the cursor is inside the text area. If the cursor is outside of the text area (`if (A_Cursor != "IBeam")`), middle click is unaffected.
+Note that the script only modifies the middle click if the cursor is inside the text area. If the cursor is outside of the text area, middle click is unaffected.
