@@ -5,13 +5,17 @@
         } else {
             scroll := true
             noScrollZone := 15
-            MouseGetPos, , yinit
+            MouseGetPos, xinit , yinit
             while scroll {
-                MouseGetPos, , y
+                MouseGetPos, x , y
                 if (y < yinit - noScrollZone)
                     send, {WheelUp 1}
                 if (y > yinit + noScrollZone)
                     send, {WheelDown 1}
+                if (x < xinit - noScrollZone)
+                    send, {WheelLeft 1}
+                if (x > xinit + noScrollZone)
+                    send, {WheelRight 1}	
                 sleep 100
             }
         }
