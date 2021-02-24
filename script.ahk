@@ -10,7 +10,7 @@
 			send {MButton}
 		} else {
 			scroll := true ; activate scroll
-			noScrollZone := 15 ; no scrolling until the mouse moves at least this far
+			noScrollZone := 10 ; no scrolling until the mouse moves at least this far
 			MouseGetPos, xinit , yinit ; initial position of cursor when middle mouse button is clicked
 			while scroll { ; loop until middle mouse button is released
 				ToolTip, SCROLLING ; visual indication that scroll is active
@@ -24,7 +24,11 @@
 					send, {WheelLeft 1}
 				if (x > xinit + noScrollZone) ; right
 					send, {WheelRight 1}
-				sleep 100 ; controls speed of scroll ... this could be improved
+				; make speed of scroll react to cursor position
+				dist := Round( Sqrt( ( x - xinit )**2 + ( y - yinit )**2 ) ) ; cursor's distance from initial position
+				sleepTime := Max( 300 - dist, 0 ) ; a lower sleeptime gives a faster scroll
+				; sleepTime:= 100 ; uncomment this line to get a constant scroll speed
+				sleep sleepTime ; loop pauses for this length of time
 			}
 		}
 	return
