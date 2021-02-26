@@ -1,7 +1,8 @@
-#IfWinActive ahk_exe Code.exe
-	; autohotkey script to enable middle mouse button scrolling in VS Code
-	; with the cursor in a text area, hold down the middle mouse button to scroll
-	; outside of text areas, middle mouse is unaffected
+; autohotkey script to enable middle mouse button scrolling in VS Code
+; with the cursor in a text area, hold down the middle mouse button to scroll
+; outside of text areas, middle mouse is unaffected
+
+#IfWinActive ahk_exe Code.exe ; script is only active in VS Code
 	MButton:: ; on middle mouse button click, do the following
 		; check if the cursor is in a text area
 		; if no, send a regular middle click
@@ -34,7 +35,7 @@
 	return
 #IfWinActive
 
-#IfWinActive ahk_exe Code.exe
+#IfWinActive ahk_exe Code.exe ; script is only active in VS Code
 	MButton Up:: ; on middle mouse button release, do the following
 		scroll := false ; cancel scroll
 		ToolTip ; cancel tooltip
