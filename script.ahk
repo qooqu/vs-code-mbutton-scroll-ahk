@@ -14,7 +14,10 @@
 			noScrollZone := 10 ; no scrolling until the mouse moves at least this far
 			MouseGetPos, xinit , yinit ; initial position of cursor when middle mouse button is clicked
 			while scroll { ; loop until middle mouse button is released
-				ToolTip, SCROLLING ; visual indication that scroll is active
+				; html character code for four direction arrow symbol
+				symbol := Chr(10021)
+				; the tooltip is locked to its initial position
+				ToolTip, %symbol%, xinit, yinit ; visual indication that scroll is active
 				MouseGetPos, x , y ; current position of cursor
 				; check the four cases
 				if (y < yinit - noScrollZone) ; up
