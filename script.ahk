@@ -7,6 +7,10 @@
 		; check if the cursor is in a text area
 		; if no, send a regular middle click
 		; if yes, scroll
+		smooth := 80 ; higher smooth value makes scroll less smooth
+		acceleration := 1.09 ; higher acceleration value makes scroll start accelerating sooner
+		slow := 10 ; lower slow value increases scroll speed
+		symbol := Chr(10021) ; html character code for four direction arrow symbol
 		if (A_Cursor != "IBeam") {
 			send {MButton}
 		} else {
@@ -14,8 +18,6 @@
 			noScrollZone := 10 ; no scrolling until the mouse moves at least this far
 			MouseGetPos, xinit , yinit ; initial position of cursor when middle mouse button is clicked
 			while scroll { ; loop until middle mouse button is released
-				; html character code for four direction arrow symbol
-				symbol := Chr(10021)
 				; the tooltip is locked to its initial position
 				ToolTip, %symbol%, xinit, yinit ; visual indication that scroll is active
 				MouseGetPos, x , y ; current position of cursor
@@ -24,13 +26,16 @@
 					send, {WheelUp 1}
 				if (y > yinit + noScrollZone) ; down
 					send, {WheelDown 1}
-				if (x < xinit - noScrollZone) ; left
-					send, {WheelLeft 1}
-				if (x > xinit + noScrollZone) ; right
-					send, {WheelRight 1}
+				; horizontal scroll is disabled because it interferes with vertical scrolling
+				; doing this makes scrolling smoother
+				; uncomment these lines to enable horizontal scrolling
+				; if (x < xinit - noScrollZone) ; left
+				; 	send, {WheelLeft 1}
+				; if (x > xinit + noScrollZone) ; right
+				; 	send, {WheelRight 1}
 				; make speed of scroll react to cursor position
 				dist := Round( Sqrt( ( x - xinit )**2 + ( y - yinit )**2 ) ) ; cursor's distance from initial position
-				sleepTime := Max( 300 - dist, 0 ) ; a lower sleeptime gives a faster scroll
+				sleepTime := Max( smooth - ( dist / slow ) ** acceleration, 0 ) ; a lower sleeptime gives a faster scroll
 				; sleepTime:= 100 ; uncomment this line to get a constant scroll speed
 				sleep sleepTime ; loop pauses for this length of time
 			}
