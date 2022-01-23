@@ -59,9 +59,7 @@
 			}
 		}
 	return
-#IfWinActive
 
-#IfWinActive ahk_exe Code.exe ; script is only active in VS Code
 	MButton Up:: ; on middle mouse button release, do the following
 		if (hasScrollingStarted) { ; check if click then scroll is activated
 			scroll := false ; cancel scroll
