@@ -7,22 +7,31 @@
 		; check if the cursor is in a text area
 		; if no, send a regular middle click
 		; if yes, scroll
+		global hasScrollingStarted := false ; used to allow click then scroll without holding
 		global noScrollZone := 10 ; no scrolling until the mouse moves at least this far
 		smooth := 80 ; higher smooth value makes scroll less smooth
 		acceleration := 1.09 ; higher acceleration value makes scroll start accelerating sooner
 		slow := 10 ; lower slow value increases scroll speed
 		symbol := Chr(10021) ; html character code for four direction arrow symbol
 		verticalScroll(y, yinit) {
-			if (y < yinit - noScrollZone) ; up
+			if (y < yinit - noScrollZone) {
 				send, {WheelUp 1}
-			if (y > yinit + noScrollZone) ; down
+				hasScrollingStarted := true
+			} ; up
+			if (y > yinit + noScrollZone) {
 				send, {WheelDown 1}
+				hasScrollingStarted := true
+			} ; down
 		}
 		horizontalScroll(x, xinit) {
-			if (x < xinit - noScrollZone) ; left
+			if (x < xinit - noScrollZone) {
 				send, {WheelLeft 1}
-			if (x > xinit + noScrollZone) ; right
+				hasScrollingStarted := true
+			} ; left
+			if (x > xinit + noScrollZone) {
 				send, {WheelRight 1}
+				hasScrollingStarted := true
+			} ; right
 		}
 		if (A_Cursor != "IBeam") {
 			send {MButton}
@@ -54,7 +63,10 @@
 
 #IfWinActive ahk_exe Code.exe ; script is only active in VS Code
 	MButton Up:: ; on middle mouse button release, do the following
-		scroll := false ; cancel scroll
-		ToolTip ; cancel tooltip
+		if (hasScrollingStarted) { ; check if click then scroll is activated
+			scroll := false ; cancel scroll
+			ToolTip ; cancel tooltip
+			hasScrollingStarted := false
+		}
 	return
 #IfWinActive
