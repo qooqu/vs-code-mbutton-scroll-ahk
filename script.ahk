@@ -8,12 +8,12 @@
 		; if no, send a regular middle click
 		; if yes, scroll
 		global hasScrollingStarted := false ; used to allow click then scroll without holding
-		global noScrollZone := 10 ; no scrolling until the mouse moves at least this far
+		noScrollZone := 10 ; no scrolling until the mouse moves at least this far
 		smooth := 80 ; higher smooth value makes scroll less smooth
 		acceleration := 1.09 ; higher acceleration value makes scroll start accelerating sooner
 		slow := 10 ; lower slow value increases scroll speed
 		symbol := Chr(10021) ; html character code for four direction arrow symbol
-		verticalScroll(y, yinit) {
+		verticalScroll(y, yinit, noScrollZone) {
 			if (y < yinit - noScrollZone) {
 				send, {WheelUp 1}
 				hasScrollingStarted := true
@@ -23,7 +23,7 @@
 				hasScrollingStarted := true
 			} ; down
 		}
-		horizontalScroll(x, xinit) {
+		horizontalScroll(x, xinit, noScrollZone) {
 			if (x < xinit - noScrollZone) {
 				send, {WheelLeft 1}
 				hasScrollingStarted := true
@@ -44,12 +44,12 @@
 				MouseGetPos, x , y ; current position of cursor
 				; check the four cases
 				if (GetKeyState("Ctrl")) { ; hold ctrl while scrolling for vertical and horizontal scroll
-					verticalScroll(y, yinit)
-					horizontalScroll(x, xinit)
+					verticalScroll(y, yinit, noScrollZone)
+					horizontalScroll(x, xinit, noScrollZone)
 				} else if (GetKeyState("Shift")) { ; hold shift for horizontal scroll
-					horizontalScroll(x, xinit)
+					horizontalScroll(x, xinit, noScrollZone)
 				} else { ; default is vertical scroll
-					verticalScroll(y, yinit)
+					verticalScroll(y, yinit, noScrollZone)
 				}
 				; make speed of scroll react to cursor position
 				dist := Round( Sqrt( ( x - xinit )**2 + ( y - yinit )**2 ) ) ; cursor's distance from initial position
@@ -61,10 +61,12 @@
 	return
 
 	MButton Up:: ; on middle mouse button release, do the following
-		if (hasScrollingStarted) { ; check if click then scroll is activated
+		if (hasScrollingStarted) { ; if the user has scrolled, scrolling without holding is off
 			scroll := false ; cancel scroll
 			ToolTip ; cancel tooltip
 			hasScrollingStarted := false
+		} else { ; if the user clicked and released without scrolling, scrolling without holding is on
+			hasScrollingStarted := true
 		}
 	return
 #IfWinActive
