@@ -1,5 +1,9 @@
 ; autohotkey script to enable middle mouse button scrolling in VS Code
-; with the cursor in a text area, hold down the middle mouse button to scroll
+; with the cursor in a text area,
+; - hold down the middle mouse button to scroll OR
+; - click the middle button to start scrolling, click again to stop
+; scrolling is vertical only by default
+; to enable horizontal scrolling, hold shift while scrolling
 ; outside of text areas, middle mouse is unaffected
 
 #IfWinActive ahk_exe Code.exe ; script is only active in VS Code
